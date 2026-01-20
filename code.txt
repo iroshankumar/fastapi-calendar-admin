@@ -1,58 +1,243 @@
-html:
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mini Year Calendar with Leave Calculator</title>
+holidays.json
+{
+  "colors": {
+    "sunday": "#a62c2c",
+    "saturday": "#e83f25",
+    "holiday": "#fef9e1"
+  },
+  "holidays": {
+    "2026-1-26": "Republic Day",
+    "2026-3-4": "Holi",
+    "2026-8-15": "Independence Day",
+    "2026-11-8": "Diwali",
+    "2026-12-25": "Christmas",
+    "2026-1-21": "testing",
+    "2026-1-22": "test2"
+  }
+}
 
-  <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
+admin.css
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-  <h1 id="yearTitle">2026</h1>
+body {
+  background: #f4f6f8;
+  margin: 0;
+  padding: 30px;
+}
 
-  <select id="yearSelect">
-    <option value="2026">2026</option>
-    <option value="2027">2027</option>
-  </select>
+.admin-container {
+  max-width: 900px;
+  margin: auto;
+}
 
-  <div id="calendar" class="calendar"></div>
+h1 {
+  margin-bottom: 4px;
+}
 
-  <div id="leaveCalculator" class="leave-calculator">
-    <h2>Working Day & Leave Calculator</h2>
+.subtitle {
+  color: #666;
+  margin-bottom: 20px;
+}
 
-    <div>
-      <label><input type="checkbox" value="0" checked> Sunday</label>
-      <label><input type="checkbox" value="1" checked> Monday</label>
-      <label><input type="checkbox" value="2" checked> Tuesday</label>
-      <label><input type="checkbox" value="3" checked> Wednesday</label>
-      <label><input type="checkbox" value="4" checked> Thursday</label>
-      <label><input type="checkbox" value="5" checked> Friday</label>
-      <label><input type="checkbox" value="6" checked> Saturday</label>
-    </div>
+/* Card layout */
+.card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
 
-    <div style="margin-top:10px;">
-      <label>Total Sick Leave: <input type="number" id="sickLeave" value="0"></label>
-      <label>Total Casual Leave: <input type="number" id="casualLeave" value="0"></label>
-      <label>Total Earned Leave: <input type="number" id="earnedLeave" value="0"></label>
-      <label>Total Short Leave (hours): <input type="number" id="shortLeave" value="0"></label>
-      <label>Total Holidays: <input type="number" id="holidays" value="0"></label>
-    </div>
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
 
-    <button id="calculateBtn">Calculate Working Days</button>
+/* Colors */
+.color-row {
+  display: flex;
+  gap: 30px;
+}
 
-    <div id="leaveResults"></div>
-  </div>
+.color-row label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
 
-  <!-- ✅ LOAD SCRIPT ONLY ONCE -->
-  <script src="/static/js/script.js"></script>
+.color-row input {
+  margin-top: 6px;
+  width: 60px;
+  height: 36px;
+  border: none;
+  cursor: pointer;
+}
 
-</body>
-</html>
+/* Holiday form */
+.holiday-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.holiday-form input {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.holiday-form button {
+  padding: 8px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.holiday-form button:hover {
+  background: #1e40af;
+}
+
+/* Holiday list */
+.holiday-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.holiday-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.holiday-list li button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #dc2626;
+}
+
+.holiday-list li button:hover {
+  color: #991b1b;
+}
+
+/* Actions */
+.actions {
+  text-align: right;
+}
+
+.save-btn {
+  padding: 10px 20px;
+  font-size: 15px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: #15803d;
+}
 
 
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-style.css:
+.logout-btn {
+  padding: 8px 14px;
+  background: #dc2626;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.logout-btn:hover {
+  background: #991b1b;
+}
+
+
+login.css
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 340px;
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.login-box input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background: #1e40af;
+}
+
+.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+style.css
 body {
   font-family: Arial, sans-serif;
   background: #f9fafb;
@@ -61,19 +246,16 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 5px;
 }
 
 select {
   display: block;
   margin: 0 auto 20px;
-  padding: 5px 10px;
 }
 
 .calendar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, auto);
   gap: 12px;
 }
 
@@ -86,7 +268,6 @@ select {
 .month h2 {
   text-align: center;
   font-size: 14px;
-  margin: 5px 0;
 }
 
 table {
@@ -103,203 +284,836 @@ th, td {
 
 th {
   background: #f1f5f9;
+}
+
+select {
+  display: block;
+  margin: 10px auto 20px;
+  padding: 6px 12px;
+  font-size: 16px;
+  min-width: 120px;   /* 🔥 FIX */
+}
+.leave-calculator {
+  margin-top: 30px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.leave-calculator h2 {
+  margin-bottom: 10px;
+}
+
+.week-select label,
+.leave-inputs label {
+  margin-right: 12px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.leave-inputs {
+  margin-top: 10px;
+}
+
+#calculateBtn {
+  margin-top: 10px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+#leaveResult {
+  margin-top: 12px;
   font-weight: bold;
 }
 
-/* Today highlight */
-.today {
-  background: #6366f1;
-  color: white;
-}
 
-/* Weekends */
+/* Weekend colors */
 .sunday {
-  background: #c8c8c8;
+  background-color: #A62C2C;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .saturday {
-  background: #e0e0e0;
+  background-color: #E83F25;
+  color: #ffffff;
+  font-weight: bold;
 }
 
-/* Holidays */
+
+/* Holiday styling */
 .holiday {
-  background: #f59e0b;
-  color: white;
+  background-color: #FB9EC6 !important;
+  color: #000;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Leave Calculator Styling */
-.leave-calculator {
-  margin-top: 30px;
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 15px;
+.holiday:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
 }
 
-.leave-calculator label {
-  margin-right: 10px;
-  display: inline-block;
+/* Holiday hover tooltip */
+.holiday {
+  background-color: #FEF9E1 !important;
+  position: relative;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.holiday::after {
+  content: attr(data-holiday);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.holiday:hover::after {
+  opacity: 1;
+}
+
+/* small hover lift */
+.holiday:hover {
+  transform: scale(1.05);
 }
 
 
-script.js:
-console.log("Script loaded");
-// --- Calendar Setup ---
-const calendar = document.getElementById("calendar");
+admin.js
+let data = {};
+
+async function loadData() {
+  const res = await fetch("/api/holidays");
+  data = await res.json();
+
+  sundayColor.value = data.colors.sunday;
+  saturdayColor.value = data.colors.saturday;
+  holidayColor.value = data.colors.holiday;
+
+  renderHolidays();
+}
+
+// function renderHolidays() {
+//   const list = document.getElementById("holidayList");
+//   list.innerHTML = "";
+
+//   Object.entries(data.holidays).forEach(([date, name]) => {
+//     const li = document.createElement("li");
+//     li.innerHTML = `
+//       ${date} - ${name}
+//       <button onclick="deleteHoliday('${date}')">❌</button>
+//     `;
+//     list.appendChild(li);
+//   });
+// }
+
+// function renderHolidays() {
+//   const list = document.getElementById("holidayList");
+//   list.innerHTML = "";
+
+//   Object.entries(data.holidays).forEach(([date, name]) => {
+//     const li = document.createElement("li");
+
+//     li.innerHTML = `
+//       ${date} - ${name}
+//       <button onclick="deleteHoliday('${date}')">❌</button>
+//     `;
+
+//     list.appendChild(li);
+//   });
+// }
+
+
+
+function renderHolidays() {
+  const list = document.getElementById("holidayList");
+  list.innerHTML = "";
+
+  Object.entries(data.holidays).forEach(([date, name]) => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <span>${date} — ${name}</span>
+      <button onclick="deleteHoliday('${date}')">✖</button>
+    `;
+
+    list.appendChild(li);
+  });
+}
+
+
+
+
+
+function addHoliday() {
+  const date = holidayDate.value;
+  const name = holidayName.value;
+  if (!date || !name) return;
+
+  const [y, m, d] = date.split("-");
+  data.holidays[`${y}-${parseInt(m)}-${parseInt(d)}`] = name;
+
+  holidayDate.value = "";
+  holidayName.value = "";
+  renderHolidays();
+}
+
+function deleteHoliday(date) {
+  delete data.holidays[date];
+  renderHolidays();
+}
+
+async function saveAll() {
+  data.colors.sunday = sundayColor.value;
+  data.colors.saturday = saturdayColor.value;
+  data.colors.holiday = holidayColor.value;
+
+  await fetch("/api/holidays", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  });
+
+  alert("Saved successfully");
+}
+
+loadData();
+
+
+script.js
+
+/*************************************************
+ * ADMIN CONFIG (HOLIDAYS + COLORS)
+ *************************************************/
+let HOLIDAYS = {};
+let COLORS = {};
+
+async function loadAdminConfig() {
+  const res = await fetch("/api/holidays");
+  const data = await res.json();
+
+  HOLIDAYS = data.holidays || {};
+  COLORS = data.colors || {};
+}
+
+/*************************************************
+ * BASIC DOM REFERENCES
+ *************************************************/
+const calendarDiv = document.getElementById("calendar");
 const yearSelect = document.getElementById("yearSelect");
 const yearTitle = document.getElementById("yearTitle");
 
-const months = [
-  "January", "February", "March", "April",
-  "May", "June", "July", "August",
-  "September", "October", "November", "December"
-];
+/*************************************************
+ * YEAR DROPDOWN
+ *************************************************/
+for (let year = CURRENT_YEAR; year <= MAX_YEAR; year++) {
+  const option = document.createElement("option");
+  option.value = year;
+  option.textContent = year;
+  yearSelect.appendChild(option);
+}
 
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+yearSelect.value = CURRENT_YEAR;
 
-function renderYear(year) {
-  calendar.innerHTML = "";
+/*************************************************
+ * CALENDAR RENDERING
+ *************************************************/
+async function loadCalendar(year) {
+  calendarDiv.innerHTML = "";
   yearTitle.textContent = year;
 
-  months.forEach((month, monthIndex) => {
+  const response = await fetch(`/api/calendar/${year}`);
+  const data = await response.json();
+
+  Object.entries(data.months).forEach(([_, weeks], monthIndex) => {
     const monthDiv = document.createElement("div");
     monthDiv.className = "month";
 
     const title = document.createElement("h2");
-    title.textContent = month;
+    title.textContent = data.month_names[monthIndex];
     monthDiv.appendChild(title);
 
     const table = document.createElement("table");
 
-    // Table header
+    /* ---------- HEADER ---------- */
     const thead = document.createElement("thead");
     const headRow = document.createElement("tr");
-    weekdays.forEach(day => {
+
+    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(day => {
       const th = document.createElement("th");
       th.textContent = day;
       headRow.appendChild(th);
     });
+
     thead.appendChild(headRow);
     table.appendChild(thead);
 
-    // Table body
+    /* ---------- BODY ---------- */
     const tbody = document.createElement("tbody");
-    const firstDay = new Date(year, monthIndex, 1).getDay();
-    const lastDate = new Date(year, monthIndex + 1, 0).getDate();
-    let row = document.createElement("tr");
 
-    for (let i = 0; i < firstDay; i++) {
-      row.appendChild(document.createElement("td"));
-    }
+    weeks.forEach(week => {
+      const row = document.createElement("tr");
 
-    for (let day = 1; day <= lastDate; day++) {
-      const cell = document.createElement("td");
-      cell.textContent = day;
+      week.forEach((day, index) => {
+        const td = document.createElement("td");
 
-      const date = new Date(year, monthIndex, day);
-      const weekDay = date.getDay();
+        if (day !== 0) {
+          td.textContent = day;
 
-      if (weekDay === 0) cell.classList.add("sunday");
-      if (weekDay === 6) cell.classList.add("saturday");
+          // Weekend coloring (admin controlled)
+          if (index === 0) {
+            td.classList.add("sunday");
+            if (COLORS.sunday) td.style.backgroundColor = COLORS.sunday;
+          }
 
-      const today = new Date();
-      if (day === today.getDate() && monthIndex === today.getMonth() && year === today.getFullYear()) {
-        cell.classList.add("today");
-      }
+          if (index === 6) {
+            td.classList.add("saturday");
+            if (COLORS.saturday) td.style.backgroundColor = COLORS.saturday;
+          }
 
-      row.appendChild(cell);
-      if ((firstDay + day) % 7 === 0) {
-        tbody.appendChild(row);
-        row = document.createElement("tr");
-      }
-    }
+          // Holiday logic (VISUAL ONLY)
+          const dateKey = `${year}-${monthIndex + 1}-${day}`;
 
-    if (row.children.length > 0) {
-      while (row.children.length < 7) {
-        row.appendChild(document.createElement("td"));
-      }
+          if (HOLIDAYS[dateKey]) {
+            td.classList.add("holiday");
+            td.setAttribute("data-holiday", HOLIDAYS[dateKey]);
+            if (COLORS.holiday) td.style.backgroundColor = COLORS.holiday;
+          }
+        }
+
+        row.appendChild(td);
+      });
+
       tbody.appendChild(row);
-    }
+    });
 
     table.appendChild(tbody);
     monthDiv.appendChild(table);
-    calendar.appendChild(monthDiv);
+    calendarDiv.appendChild(monthDiv);
   });
 }
 
-yearSelect.addEventListener("change", () => {
-  renderYear(parseInt(yearSelect.value));
+/*************************************************
+ * INITIAL LOAD (IMPORTANT)
+ *************************************************/
+(async () => {
+  await loadAdminConfig();   // 🔑 load admin data FIRST
+  loadCalendar(CURRENT_YEAR);
+})();
+
+/*************************************************
+ * YEAR CHANGE
+ *************************************************/
+yearSelect.addEventListener("change", async () => {
+  await loadAdminConfig();
+  loadCalendar(parseInt(yearSelect.value));
 });
-renderYear(2026);
 
-// --- Leave Calculator ---
+/*************************************************
+ * LEAVE / WORKING DAY CALCULATOR
+ *************************************************/
 const calculateBtn = document.getElementById("calculateBtn");
-const leaveResults = document.getElementById("leaveResults");
+const leaveResult = document.getElementById("leaveResult");
 
-calculateBtn.addEventListener("click", () => {
+calculateBtn.addEventListener("click", async () => {
   const year = parseInt(yearSelect.value);
 
-  // Working days selection
-  const checkedDays = Array.from(
-    document.querySelectorAll('#leaveCalculator input[type="checkbox"]:checked')
-  ).map(chk => parseInt(chk.value));
+  const response = await fetch(`/api/calendar/${year}`);
+  const data = await response.json();
 
-  // Leave inputs
+  let totalSaturdays = 0;
+  let totalSundays = 0;
+  let totalWorkingDays = 0;
+
+  const workingDays = Array.from(
+    document.querySelectorAll('#leaveCalculator input[type="checkbox"]:checked')
+  ).map(cb => parseInt(cb.value));
+
+  Object.values(data.months).forEach(weeks => {
+    weeks.forEach(week => {
+      week.forEach((day, index) => {
+        if (day !== 0) {
+          if (index === 6) totalSaturdays++;
+          if (index === 0) totalSundays++;
+          if (workingDays.includes(index)) totalWorkingDays++;
+        }
+      });
+    });
+  });
+
   const sickLeave = parseFloat(document.getElementById("sickLeave").value) || 0;
   const casualLeave = parseFloat(document.getElementById("casualLeave").value) || 0;
-  const earnedLeave = parseFloat(document.getElementById("earnedLeave").value) || 0;
+  const holidays = parseFloat(document.getElementById("holidays").value) || 0;
   const shortLeaveHours = parseFloat(document.getElementById("shortLeave").value) || 0;
-  const holidaysInput = parseFloat(document.getElementById("holidays").value) || 0;
 
   const shortLeaveDays = shortLeaveHours / 8;
 
-  // Count total working days based on selected weekdays
-  let totalWorkingDays = 0;
-  let totalSaturdays = 0;
-  let totalSundays = 0;
+  const netWorkingDays =
+    totalWorkingDays -
+    sickLeave -
+    casualLeave -
+    holidays -
+    shortLeaveDays;
 
-  for (let month = 0; month < 12; month++) {
-    const lastDate = new Date(year, month + 1, 0).getDate();
-    for (let day = 1; day <= lastDate; day++) {
-      const date = new Date(year, month, day);
-      const weekDay = date.getDay();
-
-      if (weekDay === 6) totalSaturdays++;
-      if (weekDay === 0) totalSundays++;
-
-      if (checkedDays.includes(weekDay)) totalWorkingDays++;
-    }
-  }
-
-  // Net working days after leaves and holidays
-  const netWorkingDays = totalWorkingDays - sickLeave - casualLeave - earnedLeave - shortLeaveDays - holidaysInput;
-
-  leaveResults.innerHTML = `
-    <p>Total Saturdays: ${totalSaturdays}</p>
-    <p>Total Sundays: ${totalSundays}</p>
-    <p>Total Holidays (user input): ${holidaysInput}</p>
-    <p>Total Working Days (excluding leaves & holidays): ${netWorkingDays.toFixed(2)}</p>
+  leaveResult.innerHTML = `
+    Total Saturdays: ${totalSaturdays}<br>
+    Total Sundays: ${totalSundays}<br>
+    Total Working Days (selected): ${totalWorkingDays}<br>
+    <hr>
+    Net Working Days: ${netWorkingDays.toFixed(2)}
   `;
 });
 
 
 
-app.py:
 
-from fastapi import FastAPI, Request
+app.py
+# from fastapi import FastAPI, Request
+# from fastapi.staticfiles import StaticFiles
+# from fastapi.templating import Jinja2Templates
+
+# app = FastAPI()
+
+# # Serve static files
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# # Templates
+# templates = Jinja2Templates(directory="templates")
+
+# @app.get("/")
+# async def home(request: Request):
+#     return templates.TemplateResponse(
+#         "index.html",
+#         {"request": request}
+#     )
+
+
+
+
+
+
+
+
+
+# from fastapi import FastAPI, Request
+# from fastapi.staticfiles import StaticFiles
+# from fastapi.templating import Jinja2Templates
+# from fastapi.responses import HTMLResponse
+
+# app = FastAPI()
+
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# templates = Jinja2Templates(directory="templates")
+
+
+# @app.get("/", response_class=HTMLResponse)
+# async def home(request: Request):
+#     return templates.TemplateResponse(
+#         "index.html",
+#         {"request": request}
+#     )
+
+
+
+
+# from fastapi import Form
+# from fastapi.responses import RedirectResponse
+# from starlette.middleware.sessions import SessionMiddleware
+
+# from fastapi import FastAPI, Request, HTTPException
+# from fastapi.responses import HTMLResponse, JSONResponse
+# from fastapi.staticfiles import StaticFiles
+# from fastapi.templating import Jinja2Templates
+# import calendar
+# from datetime import datetime
+# import json
+# from pathlib import Path
+
+
+# app = FastAPI()
+
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+# templates = Jinja2Templates(directory="templates")
+
+# CURRENT_YEAR = datetime.now().year
+# MAX_YEAR = CURRENT_YEAR + 10
+
+
+# @app.get("/", response_class=HTMLResponse)
+# async def home(request: Request):
+#     return templates.TemplateResponse(
+#         "index.html",
+#         {
+#             "request": request,
+#             "current_year": CURRENT_YEAR,
+#             "max_year": MAX_YEAR
+#         }
+#     )
+
+
+# @app.get("/api/calendar/{year}")
+# async def get_calendar(year: int):
+#     if year < CURRENT_YEAR or year > MAX_YEAR:
+#         raise HTTPException(status_code=400, detail="Year out of range")
+
+#     cal = calendar.Calendar(firstweekday=6)  # Sunday start
+#     months = {}
+
+#     for month in range(1, 13):
+#         months[month] = cal.monthdayscalendar(year, month)
+
+#     return JSONResponse({
+#         "year": year,
+#         "months": months,
+#         "month_names": list(calendar.month_name)[1:],
+#         "weekdays": list(calendar.day_abbr)
+#     })
+
+
+# DATA_FILE = Path("data/holidays.json")
+
+
+# def read_data():
+#     with open(DATA_FILE, "r") as f:
+#         return json.load(f)
+
+
+# def write_data(data):
+#     with open(DATA_FILE, "w") as f:
+#         json.dump(data, f, indent=2)
+
+
+# @app.get("/api/holidays")
+# async def get_holidays():
+#     return read_data()
+
+
+# @app.post("/api/holidays")
+# async def save_holidays(payload: dict):
+#     write_data(payload)
+#     return {"status": "saved"}
+
+
+# @app.get("/admin", response_class=HTMLResponse)
+# async def admin_page(request: Request):
+#     return templates.TemplateResponse("admin.html", {"request": request})
+
+
+
+
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from starlette.middleware.sessions import SessionMiddleware
+import calendar
+from datetime import datetime
+import json
+from pathlib import Path
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="super-secret-admin-key"
+)
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+DATA_FILE = Path("data/holidays.json")
 
+CURRENT_YEAR = datetime.now().year
+MAX_YEAR = CURRENT_YEAR + 10
+
+# ---------------- ADMIN CREDENTIALS ----------------
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "admin123"
+
+# ---------------- UTIL ----------------
+def read_data():
+    with open(DATA_FILE, "r") as f:
+        return json.load(f)
+
+def write_data(data):
+    with open(DATA_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+# ---------------- USER CALENDAR ----------------
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse(
         "index.html",
-        {"request": request}
+        {"request": request, "current_year": CURRENT_YEAR, "max_year": MAX_YEAR}
     )
+
+@app.get("/api/calendar/{year}")
+async def get_calendar(year: int):
+    cal = calendar.Calendar(firstweekday=6)
+    months = {m: cal.monthdayscalendar(year, m) for m in range(1, 13)}
+
+    return {
+        "year": year,
+        "months": months,
+        "month_names": list(calendar.month_name)[1:],
+        "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    }
+
+# ---------------- LOGIN ----------------
+@app.get("/login", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.post("/login")
+async def login(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...)
+):
+    if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+        request.session["admin"] = True
+        return RedirectResponse("/admin", status_code=302)
+
+    return templates.TemplateResponse(
+        "login.html",
+        {"request": request, "error": "Invalid username or password"}
+    )
+
+@app.get("/logout")
+async def logout(request: Request):
+    request.session.clear()
+    return RedirectResponse("/login", status_code=302)
+
+# ---------------- ADMIN PANEL ----------------
+@app.get("/admin", response_class=HTMLResponse)
+async def admin_page(request: Request):
+    if not request.session.get("admin"):
+        return RedirectResponse("/login", status_code=302)
+
+    return templates.TemplateResponse("admin.html", {"request": request})
+
+# ---------------- ADMIN APIs ----------------
+@app.get("/api/holidays")
+async def get_holidays(request: Request):
+    if not request.session.get("admin"):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+    return read_data()
+
+@app.post("/api/holidays")
+async def save_holidays(request: Request, payload: dict):
+    if not request.session.get("admin"):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+    write_data(payload)
+    return {"status": "saved"}
+
+
+
+admin.html
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+<h1>Admin Panel – Holiday & Color Manager</h1>
+
+<section>
+  <h2>Colors</h2>
+  <label>Sunday <input type="color" id="sundayColor"></label>
+  <label>Saturday <input type="color" id="saturdayColor"></label>
+  <label>Holiday <input type="color" id="holidayColor"></label>
+</section>
+
+<section>
+  <h2>Holidays</h2>
+  <input type="date" id="holidayDate">
+  <input type="text" id="holidayName" placeholder="Holiday Name">
+  <button onclick="addHoliday()">Add Holiday</button>
+
+  <ul id="holidayList"></ul>
+</section>
+
+<button onclick="saveAll()">Save All Changes</button>
+
+<script src="/static/js/admin.js"></script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel – Calendar Settings</title>
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body>
+
+  <div class="admin-container">
+  <div class="admin-header">
+  <h1>Admin Panel</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+  </div>
+
+
+
+
+    <!-- COLORS CARD -->
+    <div class="card">
+      <h2>🎨 Calendar Colors</h2>
+
+      <div class="color-row">
+        <label>
+          <span>Sunday</span>
+          <input type="color" id="sundayColor">
+        </label>
+
+        <label>
+          <span>Saturday</span>
+          <input type="color" id="saturdayColor">
+        </label>
+
+        <label>
+          <span>Holiday</span>
+          <input type="color" id="holidayColor">
+        </label>
+      </div>
+    </div>
+
+    <!-- HOLIDAYS CARD -->
+    <div class="card">
+      <h2>📅 Holidays</h2>
+
+      <div class="holiday-form">
+        <input type="date" id="holidayDate">
+        <input type="text" id="holidayName" placeholder="Holiday name">
+        <button onclick="addHoliday()">Add</button>
+      </div>
+
+      <ul id="holidayList" class="holiday-list"></ul>
+    </div>
+
+    <!-- SAVE -->
+    <div class="actions">
+      <button class="save-btn" onclick="saveAll()">💾 Save All Changes</button>
+    </div>
+
+  </div>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>
+
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Calendar App</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- 🔹 Year title (shown above calendar) -->
+  <h1 id="yearTitle"></h1>
+
+  <!-- 🔹 Year dropdown (JS will populate this) -->
+  <select id="yearSelect" aria-label="Select Year"></select>
+
+  <!-- 🔹 Calendar container -->
+  <div id="calendar" class="calendar"></div>
+
+  <!-- ===============================
+     WORKING DAY CALCULATOR
+================================ -->
+<div class="leave-calculator" id="leaveCalculator">
+
+  <h2>Working Day Calculator</h2>
+
+  <!-- Working days selection -->
+  <div class="leave-calculator" id="leaveCalculator">
+  <h2>Working Day & Leave Calculator</h2>
+
+  <!-- Working Days Selection -->
+  <div class="week-select">
+    <label><input type="checkbox" value="1" checked> Monday</label>
+    <label><input type="checkbox" value="2" checked> Tuesday</label>
+    <label><input type="checkbox" value="3" checked> Wednesday</label>
+    <label><input type="checkbox" value="4" checked> Thursday</label>
+    <label><input type="checkbox" value="5" checked> Friday</label>
+    <label><input type="checkbox" value="6"> Saturday</label>
+    <label><input type="checkbox" value="0"> Sunday</label>
+  </div>
+
+  <!-- Leave Inputs -->
+  <div class="leave-inputs">
+    <label>Sick Leave (days): <input type="number" id="sickLeave"></label>
+    <label>Casual Leave (days): <input type="number" id="casualLeave"></label>
+    <label>Holidays (days): <input type="number" id="holidays"></label>
+    <label>Short Leave (hours/year): <input type="number" id="shortLeave"></label>
+  </div>
+
+  <button id="calculateBtn">Calculate</button>
+
+  <div id="leaveResult"></div>
+</div>
+
+
+
+  <!-- 🔹 Inject backend values into JS -->
+  <script>
+    const CURRENT_YEAR = {{ current_year }};
+    const MAX_YEAR = {{ max_year }};
+  </script>
+
+  <!-- 🔹 Main JS file -->
+  <script src="/static/js/script.js"></script>
+
+</body>
+</html>
+
+
+login.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+
+<div class="login-box">
+  <h2>🔐 Admin Login</h2>
+
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" action="/login">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+</body>
+</html>
+
