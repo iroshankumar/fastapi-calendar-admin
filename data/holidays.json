@@ -1,0 +1,16 @@
+{
+  "colors": {
+    "sunday": "#a62c2c",
+    "saturday": "#e83f25",
+    "holiday": "#fef9e1"
+  },
+  "holidays": {
+    "2026-1-26": "Republic Day",
+    "2026-3-4": "Holi",
+    "2026-8-15": "Independence Day",
+    "2026-11-8": "Diwali",
+    "2026-12-25": "Christmas",
+    "2026-1-21": "testing",
+    "2026-1-22": "test2"
+  }
+}

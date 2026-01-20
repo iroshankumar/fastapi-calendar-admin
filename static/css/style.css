@@ -1,0 +1,152 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9fafb;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+select {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.month {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.month h2 {
+  text-align: center;
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 2px;
+  text-align: center;
+}
+
+th {
+  background: #f1f5f9;
+}
+
+select {
+  display: block;
+  margin: 10px auto 20px;
+  padding: 6px 12px;
+  font-size: 16px;
+  min-width: 120px;   /* 🔥 FIX */
+}
+.leave-calculator {
+  margin-top: 30px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.leave-calculator h2 {
+  margin-bottom: 10px;
+}
+
+.week-select label,
+.leave-inputs label {
+  margin-right: 12px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.leave-inputs {
+  margin-top: 10px;
+}
+
+#calculateBtn {
+  margin-top: 10px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+#leaveResult {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+
+/* Weekend colors */
+.sunday {
+  background-color: #A62C2C;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.saturday {
+  background-color: #E83F25;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+
+/* Holiday styling */
+.holiday {
+  background-color: #FB9EC6 !important;
+  color: #000;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.holiday:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* Holiday hover tooltip */
+.holiday {
+  background-color: #FEF9E1 !important;
+  position: relative;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.holiday::after {
+  content: attr(data-holiday);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.holiday:hover::after {
+  opacity: 1;
+}
+
+/* small hover lift */
+.holiday:hover {
+  transform: scale(1.05);
+}

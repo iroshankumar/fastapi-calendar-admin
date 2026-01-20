@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Calendar App</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- 🔹 Year title (shown above calendar) -->
+  <h1 id="yearTitle"></h1>
+
+  <!-- 🔹 Year dropdown (JS will populate this) -->
+  <select id="yearSelect" aria-label="Select Year"></select>
+
+  <!-- 🔹 Calendar container -->
+  <div id="calendar" class="calendar"></div>
+
+  <!-- ===============================
+     WORKING DAY CALCULATOR
+================================ -->
+<div class="leave-calculator" id="leaveCalculator">
+
+  <h2>Working Day Calculator</h2>
+
+  <!-- Working days selection -->
+  <div class="leave-calculator" id="leaveCalculator">
+  <h2>Working Day & Leave Calculator</h2>
+
+  <!-- Working Days Selection -->
+  <div class="week-select">
+    <label><input type="checkbox" value="1" checked> Monday</label>
+    <label><input type="checkbox" value="2" checked> Tuesday</label>
+    <label><input type="checkbox" value="3" checked> Wednesday</label>
+    <label><input type="checkbox" value="4" checked> Thursday</label>
+    <label><input type="checkbox" value="5" checked> Friday</label>
+    <label><input type="checkbox" value="6"> Saturday</label>
+    <label><input type="checkbox" value="0"> Sunday</label>
+  </div>
+
+  <!-- Leave Inputs -->
+  <div class="leave-inputs">
+    <label>Sick Leave (days): <input type="number" id="sickLeave"></label>
+    <label>Casual Leave (days): <input type="number" id="casualLeave"></label>
+    <label>Holidays (days): <input type="number" id="holidays"></label>
+    <label>Short Leave (hours/year): <input type="number" id="shortLeave"></label>
+  </div>
+
+  <button id="calculateBtn">Calculate</button>
+
+  <div id="leaveResult"></div>
+</div>
+
+
+
+  <!-- 🔹 Inject backend values into JS -->
+  <script>
+    const CURRENT_YEAR = {{ current_year }};
+    const MAX_YEAR = {{ max_year }};
+  </script>
+
+  <!-- 🔹 Main JS file -->
+  <script src="/static/js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Year Calendar with Leave Calculator</title>
+
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <h1 id="yearTitle">2026</h1>
+
+  <select id="yearSelect">
+    <option value="2026">2026</option>
+    <option value="2027">2027</option>
+  </select>
+
+  <div id="calendar" class="calendar"></div>
+
+  <div id="leaveCalculator" class="leave-calculator">
+    <h2>Working Day & Leave Calculator</h2>
+
+    <div>
+      <label><input type="checkbox" value="0" checked> Sunday</label>
+      <label><input type="checkbox" value="1" checked> Monday</label>
+      <label><input type="checkbox" value="2" checked> Tuesday</label>
+      <label><input type="checkbox" value="3" checked> Wednesday</label>
+      <label><input type="checkbox" value="4" checked> Thursday</label>
+      <label><input type="checkbox" value="5" checked> Friday</label>
+      <label><input type="checkbox" value="6" checked> Saturday</label>
+    </div>
+
+    <div style="margin-top:10px;">
+      <label>Total Sick Leave: <input type="number" id="sickLeave" value="0"></label>
+      <label>Total Casual Leave: <input type="number" id="casualLeave" value="0"></label>
+      <label>Total Earned Leave: <input type="number" id="earnedLeave" value="0"></label>
+      <label>Total Short Leave (hours): <input type="number" id="shortLeave" value="0"></label>
+      <label>Total Holidays: <input type="number" id="holidays" value="0"></label>
+    </div>
+
+    <button id="calculateBtn">Calculate Working Days</button>
+
+    <div id="leaveResults"></div>
+  </div>
+
+  <!-- ✅ LOAD SCRIPT ONLY ONCE -->
+  <script src="/static/js/script.js"></script>
+
+</body>
+</html>
+
+
+
+style.css:
+body {
+  font-family: Arial, sans-serif;
+  background: #f9fafb;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+select {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 5px 10px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 12px;
+}
+
+.month {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.month h2 {
+  text-align: center;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 2px;
+  text-align: center;
+}
+
+th {
+  background: #f1f5f9;
+  font-weight: bold;
+}
+
+/* Today highlight */
+.today {
+  background: #6366f1;
+  color: white;
+}
+
+/* Weekends */
+.sunday {
+  background: #c8c8c8;
+}
+
+.saturday {
+  background: #e0e0e0;
+}
+
+/* Holidays */
+.holiday {
+  background: #f59e0b;
+  color: white;
+}
+
+/* Leave Calculator Styling */
+.leave-calculator {
+  margin-top: 30px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+.leave-calculator label {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+
+script.js:
+console.log("Script loaded");
+// --- Calendar Setup ---
+const calendar = document.getElementById("calendar");
+const yearSelect = document.getElementById("yearSelect");
+const yearTitle = document.getElementById("yearTitle");
+
+const months = [
+  "January", "February", "March", "April",
+  "May", "June", "July", "August",
+  "September", "October", "November", "December"
+];
+
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function renderYear(year) {
+  calendar.innerHTML = "";
+  yearTitle.textContent = year;
+
+  months.forEach((month, monthIndex) => {
+    const monthDiv = document.createElement("div");
+    monthDiv.className = "month";
+
+    const title = document.createElement("h2");
+    title.textContent = month;
+    monthDiv.appendChild(title);
+
+    const table = document.createElement("table");
+
+    // Table header
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    weekdays.forEach(day => {
+      const th = document.createElement("th");
+      th.textContent = day;
+      headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    // Table body
+    const tbody = document.createElement("tbody");
+    const firstDay = new Date(year, monthIndex, 1).getDay();
+    const lastDate = new Date(year, monthIndex + 1, 0).getDate();
+    let row = document.createElement("tr");
+
+    for (let i = 0; i < firstDay; i++) {
+      row.appendChild(document.createElement("td"));
+    }
+
+    for (let day = 1; day <= lastDate; day++) {
+      const cell = document.createElement("td");
+      cell.textContent = day;
+
+      const date = new Date(year, monthIndex, day);
+      const weekDay = date.getDay();
+
+      if (weekDay === 0) cell.classList.add("sunday");
+      if (weekDay === 6) cell.classList.add("saturday");
+
+      const today = new Date();
+      if (day === today.getDate() && monthIndex === today.getMonth() && year === today.getFullYear()) {
+        cell.classList.add("today");
+      }
+
+      row.appendChild(cell);
+      if ((firstDay + day) % 7 === 0) {
+        tbody.appendChild(row);
+        row = document.createElement("tr");
+      }
+    }
+
+    if (row.children.length > 0) {
+      while (row.children.length < 7) {
+        row.appendChild(document.createElement("td"));
+      }
+      tbody.appendChild(row);
+    }
+
+    table.appendChild(tbody);
+    monthDiv.appendChild(table);
+    calendar.appendChild(monthDiv);
+  });
+}
+
+yearSelect.addEventListener("change", () => {
+  renderYear(parseInt(yearSelect.value));
+});
+renderYear(2026);
+
+// --- Leave Calculator ---
+const calculateBtn = document.getElementById("calculateBtn");
+const leaveResults = document.getElementById("leaveResults");
+
+calculateBtn.addEventListener("click", () => {
+  const year = parseInt(yearSelect.value);
+
+  // Working days selection
+  const checkedDays = Array.from(
+    document.querySelectorAll('#leaveCalculator input[type="checkbox"]:checked')
+  ).map(chk => parseInt(chk.value));
+
+  // Leave inputs
+  const sickLeave = parseFloat(document.getElementById("sickLeave").value) || 0;
+  const casualLeave = parseFloat(document.getElementById("casualLeave").value) || 0;
+  const earnedLeave = parseFloat(document.getElementById("earnedLeave").value) || 0;
+  const shortLeaveHours = parseFloat(document.getElementById("shortLeave").value) || 0;
+  const holidaysInput = parseFloat(document.getElementById("holidays").value) || 0;
+
+  const shortLeaveDays = shortLeaveHours / 8;
+
+  // Count total working days based on selected weekdays
+  let totalWorkingDays = 0;
+  let totalSaturdays = 0;
+  let totalSundays = 0;
+
+  for (let month = 0; month < 12; month++) {
+    const lastDate = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= lastDate; day++) {
+      const date = new Date(year, month, day);
+      const weekDay = date.getDay();
+
+      if (weekDay === 6) totalSaturdays++;
+      if (weekDay === 0) totalSundays++;
+
+      if (checkedDays.includes(weekDay)) totalWorkingDays++;
+    }
+  }
+
+  // Net working days after leaves and holidays
+  const netWorkingDays = totalWorkingDays - sickLeave - casualLeave - earnedLeave - shortLeaveDays - holidaysInput;
+
+  leaveResults.innerHTML = `
+    <p>Total Saturdays: ${totalSaturdays}</p>
+    <p>Total Sundays: ${totalSundays}</p>
+    <p>Total Holidays (user input): ${holidaysInput}</p>
+    <p>Total Working Days (excluding leaves & holidays): ${netWorkingDays.toFixed(2)}</p>
+  `;
+});
+
+
+
+app.py:
+
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+
+app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request}
+    )

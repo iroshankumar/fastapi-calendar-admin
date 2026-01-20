@@ -1,0 +1,97 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+<h1>Admin Panel – Holiday & Color Manager</h1>
+
+<section>
+  <h2>Colors</h2>
+  <label>Sunday <input type="color" id="sundayColor"></label>
+  <label>Saturday <input type="color" id="saturdayColor"></label>
+  <label>Holiday <input type="color" id="holidayColor"></label>
+</section>
+
+<section>
+  <h2>Holidays</h2>
+  <input type="date" id="holidayDate">
+  <input type="text" id="holidayName" placeholder="Holiday Name">
+  <button onclick="addHoliday()">Add Holiday</button>
+
+  <ul id="holidayList"></ul>
+</section>
+
+<button onclick="saveAll()">Save All Changes</button>
+
+<script src="/static/js/admin.js"></script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel – Calendar Settings</title>
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body>
+
+  <div class="admin-container">
+  <div class="admin-header">
+  <h1>Admin Panel</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+  </div>
+
+
+
+
+    <!-- COLORS CARD -->
+    <div class="card">
+      <h2>🎨 Calendar Colors</h2>
+
+      <div class="color-row">
+        <label>
+          <span>Sunday</span>
+          <input type="color" id="sundayColor">
+        </label>
+
+        <label>
+          <span>Saturday</span>
+          <input type="color" id="saturdayColor">
+        </label>
+
+        <label>
+          <span>Holiday</span>
+          <input type="color" id="holidayColor">
+        </label>
+      </div>
+    </div>
+
+    <!-- HOLIDAYS CARD -->
+    <div class="card">
+      <h2>📅 Holidays</h2>
+
+      <div class="holiday-form">
+        <input type="date" id="holidayDate">
+        <input type="text" id="holidayName" placeholder="Holiday name">
+        <button onclick="addHoliday()">Add</button>
+      </div>
+
+      <ul id="holidayList" class="holiday-list"></ul>
+    </div>
+
+    <!-- SAVE -->
+    <div class="actions">
+      <button class="save-btn" onclick="saveAll()">💾 Save All Changes</button>
+    </div>
+
+  </div>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>
