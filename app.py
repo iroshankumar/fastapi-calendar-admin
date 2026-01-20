@@ -152,7 +152,25 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-DATA_FILE = Path("data/holidays.json")
+# DATA_FILE = Path("data/holidays.json")
+from pathlib import Path
+import json
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_FILE = BASE_DIR / "data" / "holidays.json"
+
+# 🔑 Ensure holidays.json exists (Render-safe)
+if not DATA_FILE.exists():
+    DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+    DATA_FILE.write_text(json.dumps({
+        "colors": {
+            "sunday": "#A62C2C",
+            "saturday": "#E83F25",
+            "holiday": "#FEF9E1"
+        },
+        "holidays": {}
+    }, indent=2))
+
 
 CURRENT_YEAR = datetime.now().year
 MAX_YEAR = CURRENT_YEAR + 10
@@ -236,3 +254,6 @@ async def save_holidays(request: Request, payload: dict):
         return JSONResponse({"error": "Unauthorized"}, status_code=401)
     write_data(payload)
     return {"status": "saved"}
+
+# ---------------- RUN APP ----------------
+
