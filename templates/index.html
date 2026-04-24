@@ -13,6 +13,9 @@
   <!-- 🔹 Year dropdown (JS will populate this) -->
   <select id="yearSelect" aria-label="Select Year"></select>
 
+  <!-- 🔹 Current IST date -->
+  <div class="current-date">Current date (IST): <strong id="currentDateIST"></strong></div>
+
   <!-- 🔹 Calendar container -->
   <div id="calendar" class="calendar"></div>
 
@@ -21,10 +24,6 @@
 ================================ -->
 <div class="leave-calculator" id="leaveCalculator">
 
-  <h2>Working Day Calculator</h2>
-
-  <!-- Working days selection -->
-  <div class="leave-calculator" id="leaveCalculator">
   <h2>Working Day & Leave Calculator</h2>
 
   <!-- Working Days Selection -->
@@ -44,6 +43,11 @@
     <label>Casual Leave (days): <input type="number" id="casualLeave"></label>
     <label>Holidays (days): <input type="number" id="holidays"></label>
     <label>Short Leave (hours/year): <input type="number" id="shortLeave"></label>
+    <label>Extra Working Days: <input type="number" id="extraWorkingDays" min="0" step="1"></label>
+  </div>
+
+  <div class="leave-inputs">
+    <label><input type="checkbox" id="balanceDaysToggle"> Calculate balance working days from today to year end</label>
   </div>
 
   <button id="calculateBtn">Calculate</button>

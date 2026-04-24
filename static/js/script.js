@@ -19,6 +19,33 @@ const calendarDiv = document.getElementById("calendar");
 const yearSelect = document.getElementById("yearSelect");
 const yearTitle = document.getElementById("yearTitle");
 
+function getISTDateObject() {
+  const now = new Date();
+  const utcMillis = now.getTime() + now.getTimezoneOffset() * 60000;
+  const istOffset = 5.5 * 60 * 60000;
+  return new Date(utcMillis + istOffset);
+}
+
+function formatISTDate(now) {
+  return new Intl.DateTimeFormat("en-IN", {
+    timeZone: "Asia/Kolkata",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).format(now);
+}
+
+function updateCurrentDateIST() {
+  const currentDateSpan = document.getElementById("currentDateIST");
+  if (currentDateSpan) {
+    currentDateSpan.textContent = formatISTDate(new Date());
+  }
+}
+
 /*************************************************
  * YEAR DROPDOWN
  *************************************************/
@@ -41,15 +68,24 @@ async function loadCalendar(year) {
   const response = await fetch(`/api/calendar/${year}`);
   const data = await response.json();
 
-  Object.entries(data.months).forEach(([_, weeks], monthIndex) => {
+  Object.entries(data.months).forEach(([monthKey, weeks]) => {
+    const month = parseInt(monthKey, 10);
     const monthDiv = document.createElement("div");
     monthDiv.className = "month";
 
     const title = document.createElement("h2");
-    title.textContent = data.month_names[monthIndex];
+    title.textContent = data.month_names[month - 1];
     monthDiv.appendChild(title);
 
     const table = document.createElement("table");
+
+    let firstSaturdayDay = null;
+    for (const week of weeks) {
+      if (week[6] !== 0) {
+        firstSaturdayDay = week[6];
+        break;
+      }
+    }
 
     /* ---------- HEADER ---------- */
     const thead = document.createElement("thead");
@@ -88,12 +124,19 @@ async function loadCalendar(year) {
           }
 
           // Holiday logic (VISUAL ONLY)
-          const dateKey = `${year}-${monthIndex + 1}-${day}`;
+          const dateKey = `${year}-${month}-${day}`;
 
           if (HOLIDAYS[dateKey]) {
             td.classList.add("holiday");
             td.setAttribute("data-holiday", HOLIDAYS[dateKey]);
             if (COLORS.holiday) td.style.backgroundColor = COLORS.holiday;
+          }
+
+          // First Saturday skin color override
+          if (index === 6 && day === firstSaturdayDay) {
+            td.classList.add("first-saturday");
+            td.style.setProperty("background-color", "#F4D6B3", "important");
+            td.style.color = "#000";
           }
         }
 
@@ -115,6 +158,7 @@ async function loadCalendar(year) {
 (async () => {
   await loadAdminConfig();   // 🔑 load admin data FIRST
   loadCalendar(CURRENT_YEAR);
+  updateCurrentDateIST();
 })();
 
 /*************************************************
@@ -123,6 +167,7 @@ async function loadCalendar(year) {
 yearSelect.addEventListener("change", async () => {
   await loadAdminConfig();
   loadCalendar(parseInt(yearSelect.value));
+  updateCurrentDateIST();
 });
 
 /*************************************************
@@ -161,20 +206,47 @@ calculateBtn.addEventListener("click", async () => {
   const casualLeave = parseFloat(document.getElementById("casualLeave").value) || 0;
   const holidays = parseFloat(document.getElementById("holidays").value) || 0;
   const shortLeaveHours = parseFloat(document.getElementById("shortLeave").value) || 0;
+  const extraWorkingDays = parseFloat(document.getElementById("extraWorkingDays").value) || 0;
+  const calculateBalance = document.getElementById("balanceDaysToggle").checked;
 
   const shortLeaveDays = shortLeaveHours / 8;
 
   const netWorkingDays =
-    totalWorkingDays -
+    totalWorkingDays +
+    extraWorkingDays -
     sickLeave -
     casualLeave -
     holidays -
     shortLeaveDays;
 
+  let balanceWorkingDays = 0;
+  if (calculateBalance) {
+    const now = new Date();
+    const utcMillis = now.getTime() + now.getTimezoneOffset() * 60000;
+    const istMillis = utcMillis + 5.5 * 60 * 60000;
+    const currentIst = new Date(istMillis);
+    const yearEnd = new Date(Date.UTC(currentIst.getUTCFullYear(), 11, 31));
+    let currentDate = new Date(Date.UTC(
+      currentIst.getUTCFullYear(),
+      currentIst.getUTCMonth(),
+      currentIst.getUTCDate()
+    ));
+
+    while (currentDate <= yearEnd) {
+      const weekday = currentDate.getUTCDay();
+      if (workingDays.includes(weekday)) {
+        balanceWorkingDays++;
+      }
+      currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    }
+  }
+
   leaveResult.innerHTML = `
     Total Saturdays: ${totalSaturdays}<br>
     Total Sundays: ${totalSundays}<br>
     Total Working Days (selected): ${totalWorkingDays}<br>
+    Extra Working Days: ${extraWorkingDays}<br>
+    ${calculateBalance ? `Balance Working Days to year end: ${balanceWorkingDays}<br>` : ""}
     <hr>
     Net Working Days: ${netWorkingDays.toFixed(2)}
   `;

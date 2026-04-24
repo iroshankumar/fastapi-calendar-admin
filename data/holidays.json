@@ -5,12 +5,16 @@
     "holiday": "#fef9e1"
   },
   "holidays": {
-    "2026-1-26": "Republic Day",
-    "2026-3-4": "Holi",
-    "2026-8-15": "Independence Day",
-    "2026-11-8": "Diwali",
+    "2026-1-1": "New Year",
+    "2026-1-26": "Republic day",
+    "2026-3-3": "Holi",
+    "2026-4-14": "Vaisakhi / Vishu / New Year",
+    "2026-5-1": "Labour's",
+    "2026-8-28": "Raksha Bandhan",
+    "2026-10-2": "Mahatma Gandhi Jayanti",
+    "2026-10-20": "Dussehra / Ayudha Pooja",
+    "2026-11-10": "Diwali",
     "2026-12-25": "Christmas",
-    "2026-1-21": "testing",
-    "2026-1-22": "test2"
+    "2026-11-11": "Bhai Duj"
   }
 }
